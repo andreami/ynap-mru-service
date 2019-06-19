@@ -11,8 +11,8 @@ object MruServer {
   def stream(implicit T: Timer[IO], C: ContextShift[IO]): Stream[IO, Nothing] = {
     for {
       _ <- Stream.eval(IO.unit)
-      helloWorldAlg = HelloWorld.impl[IO]
-      httpApp = MruRoutes.helloWorldRoutes[IO](helloWorldAlg).orNotFound
+      helloWorldAlg = HelloWorld.impl
+      httpApp = MruRoutes.helloWorldRoutes(helloWorldAlg).orNotFound
       finalHttpApp = Logger.httpApp(true, true)(httpApp)
       exitCode <- BlazeServerBuilder[IO]
         .bindHttp(8080, "0.0.0.0")

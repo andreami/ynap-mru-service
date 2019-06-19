@@ -4,6 +4,7 @@ import cats.effect.Sync
 import cats.implicits._
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
+import cats.effect._
 
 object MruRoutes {
 
@@ -19,10 +20,10 @@ object MruRoutes {
     }
   }
 
-  def helloWorldRoutes[F[_]: Sync](H: HelloWorld[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F]{}
+  def helloWorldRoutes(H: HelloWorld): HttpRoutes[IO] = {
+    val dsl = new Http4sDsl[IO]{}
     import dsl._
-    HttpRoutes.of[F] {
+    HttpRoutes.of[IO] {
       case GET -> Root / "hello" / name =>
         for {
           greeting <- H.hello(HelloWorld.Name(name))
