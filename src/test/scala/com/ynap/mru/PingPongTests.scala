@@ -39,8 +39,7 @@ class PingPongTests extends FunSuite {
     val route: HttpRoutes[IO] = HttpRoutes.of[IO] {
       case GET -> Root / "ping" =>
         for {
-          str <- IO.pure("pong")
-          resp <- Ok(Pong(str))
+          resp <- Ok(Pong("pong"))
         } yield resp
     }
 
