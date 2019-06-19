@@ -27,19 +27,15 @@ class PingPongTests extends FunSuite {
   }
 
   test("it works") {
-
     val scenario = for {
       req <- GET(uri"/ping")
       res <- MruServer.app.run(req)
-      body <- res.as[String]
+      body <- res.as[PongRes]
     } yield (res.status, body)
 
     val (status, body) = scenario.unsafeRunSync()
 
     assert(status == Status.Ok)
-    assert(body == expected(PongRes("ok")))
+    assert(body == PongRes("ok"))
   }
-
-  def expected[A](a: A)(implicit E: Encoder[A]): String =
-    a.asJson.noSpaces
 }
