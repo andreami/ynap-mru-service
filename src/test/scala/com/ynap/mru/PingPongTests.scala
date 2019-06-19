@@ -1,16 +1,15 @@
 package com.ynap.mru
 
 import cats.Applicative
-import cats.effect.IO
-import io.circe.literal._
-import io.circe.{Encoder, Json}
-import org.http4s.{EntityEncoder, _}
+import cats.effect.{IO, Sync}
+import io.circe.generic.semiauto._
+import io.circe.syntax._
+import io.circe.{Decoder, Encoder}
 import org.http4s.circe._
 import org.http4s.dsl.Http4sDsl
 import org.http4s.implicits._
+import org.http4s.{EntityDecoder, EntityEncoder, Method, Request, _}
 import org.scalatest.FunSuite
-import io.circe.generic.auto._
-import io.circe.syntax._
 
 class PingPongTests extends FunSuite {
 
@@ -18,16 +17,20 @@ class PingPongTests extends FunSuite {
 
   import dsl._
 
-  case class Pong(message: String)
+  case class Pong(value: String)
   object Pong {
-    implicit def greetingEntityEncoder[F[_] : Applicative](implicit E:Encoder[Pong]): EntityEncoder[F, Pong] =
-      jsonEncoderOf[F, Pong]
+    implicit val pongEncoder: Encoder[Pong] = deriveEncoder[Pong]
+    implicit val pongDecoder: Decoder[Pong] = deriveDecoder[Pong]
+    implicit def pongEntityDecoder[F[_] : Sync]: EntityDecoder[F, Pong] = jsonOf
+    implicit def pongEntityEncoder[F[_] : Applicative]: EntityEncoder[F, Pong] = jsonEncoderOf
   }
 
   case class PongRes(value: String)
   object PongRes {
-    implicit def greetingEntityEncoder[F[_] : Applicative](implicit E:Encoder[PongRes]): EntityEncoder[F, PongRes] =
-      jsonEncoderOf[F, PongRes]
+    implicit val pongResEncoder: Encoder[PongRes] = deriveEncoder[PongRes]
+    implicit val pongResDecoder: Decoder[PongRes] = deriveDecoder[PongRes]
+    implicit def pongResEntityDecoder[F[_] : Sync]: EntityDecoder[F, PongRes] = jsonOf
+    implicit def pongResEntityEncoder[F[_] : Applicative]: EntityEncoder[F, PongRes] = jsonEncoderOf
   }
 
   test("it works") {
