@@ -2,18 +2,15 @@ package com.ynap.mru
 
 import cats.Applicative
 import cats.effect.{IO, Sync}
-import cats.implicits._
 import io.circe.generic.semiauto._
 import io.circe.{Decoder, Encoder}
 import org.http4s.circe._
-import org.http4s.dsl.Http4sDsl
+import org.http4s.dsl.io._
 import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
 
 object MruRoutes {
 
   def helloWorldRoutes(H: HelloWorld): HttpRoutes[IO] = {
-    val dsl = new Http4sDsl[IO] {}
-    import dsl._
     HttpRoutes.of[IO] {
       case GET -> Root / "hello" / name =>
         for {
@@ -33,8 +30,6 @@ object MruRoutes {
   }
 
   val ping: HttpRoutes[IO] = {
-    val dsl = new Http4sDsl[IO] {}
-    import dsl._
     HttpRoutes.of[IO] {
       case GET -> Root / "ping" =>
         Ok(Pong("ok"))
