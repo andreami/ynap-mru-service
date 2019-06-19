@@ -14,10 +14,12 @@ lazy val root = (project in file("."))
       "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
       "org.http4s" %% "http4s-circe" % Http4sVersion,
       "org.http4s" %% "http4s-dsl" % Http4sVersion,
+      
       "io.circe" %% "circe-core" % CirceVersion,
       "io.circe" %% "circe-generic" % CirceVersion,
       "io.circe" %% "circe-parser" % CirceVersion,
       "io.circe" %% "circe-literal" % CirceVersion,
+      
       "org.scalatest" %% "scalatest" % "3.0.8" % "test",
       "ch.qos.logback" % "logback-classic" % LogbackVersion
     ),
