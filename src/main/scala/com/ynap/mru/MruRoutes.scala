@@ -11,18 +11,6 @@ import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
 
 object MruRoutes {
 
-  def jokeRoutes[F[_] : Sync](J: Jokes[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F] {}
-    import dsl._
-    HttpRoutes.of[F] {
-      case GET -> Root / "joke" =>
-        for {
-          joke <- J.get
-          resp <- Ok(joke)
-        } yield resp
-    }
-  }
-
   def helloWorldRoutes(H: HelloWorld): HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
