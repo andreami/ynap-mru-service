@@ -16,8 +16,8 @@ class HelloWorldSpec extends FunSuite {
   }
 
   private[this] val retHelloWorld: Response[IO] = {
-    val getHW = Request[IO](Method.GET, uri"/hello/world")
     val helloWorld = HelloWorld.impl[IO]
+    val getHW = Request[IO](Method.GET, uri"/hello/world")
     MruRoutes.helloWorldRoutes(helloWorld).orNotFound(getHW).unsafeRunSync()
   }
 }
