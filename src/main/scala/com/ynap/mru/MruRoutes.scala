@@ -31,4 +31,21 @@ object MruRoutes {
     case GET -> Root / "ping" =>
       Ok(Pong("ok"))
   }
+
+  case class Echo(value: String)
+
+  object Echo {
+    implicit val pongEncoder: Encoder[Echo] = deriveEncoder[Echo]
+    implicit val pongDecoder: Decoder[Echo] = deriveDecoder[Echo]
+    implicit def pongEntityDecoder[F[_] : Sync]: EntityDecoder[F, Echo] = jsonOf
+    implicit def pongEntityEncoder[F[_] : Applicative]: EntityEncoder[F, Echo] = jsonEncoderOf
+  }
+
+  val echo: HttpRoutes[IO] = HttpRoutes.of[IO] {
+    case req @ POST -> Root / "echo" =>
+      for {
+        e <- req.as[Echo]
+        res <- Ok(Echo(s"${e.value} ${e.value}"))
+      } yield res
+  }
 }
