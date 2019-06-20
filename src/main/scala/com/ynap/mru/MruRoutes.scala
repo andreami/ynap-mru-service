@@ -10,14 +10,12 @@ import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
 
 object MruRoutes {
 
-  def helloWorldRoutes(H: HelloWorld): HttpRoutes[IO] = {
-    HttpRoutes.of[IO] {
-      case GET -> Root / "hello" / name =>
-        for {
-          greeting <- H.hello(HelloWorld.Name(name))
-          resp <- Ok(greeting)
-        } yield resp
-    }
+  def helloWorldRoutes(H: HelloWorld): HttpRoutes[IO] = HttpRoutes.of[IO] {
+    case GET -> Root / "hello" / name =>
+      for {
+        greeting <- H.hello(HelloWorld.Name(name))
+        resp <- Ok(greeting)
+      } yield resp
   }
 
   case class Pong(value: String)
@@ -29,10 +27,8 @@ object MruRoutes {
     implicit def pongEntityEncoder[F[_] : Applicative]: EntityEncoder[F, Pong] = jsonEncoderOf
   }
 
-  val ping: HttpRoutes[IO] = {
-    HttpRoutes.of[IO] {
-      case GET -> Root / "ping" =>
-        Ok(Pong("ok"))
-    }
+  val ping: HttpRoutes[IO] = HttpRoutes.of[IO] {
+    case GET -> Root / "ping" =>
+      Ok(Pong("ok"))
   }
 }
