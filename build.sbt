@@ -36,3 +36,12 @@ scalacOptions ++= Seq(
   "-Ypartial-unification",
   "-Xfatal-warnings",
 )
+
+addCommandAlias("fm", "all compile:scalafmt test:scalafmt")
+addCommandAlias("cc", "all clean compile")
+addCommandAlias("c", "compile")
+addCommandAlias("r", "run")
+addCommandAlias("t", "test")
+addCommandAlias("to", "testOnly")
+addCommandAlias("ps", "projects")
+addCommandAlias("p", "project")
