@@ -2,9 +2,8 @@ package com.ynap.mru
 
 import cats._
 import cats.effect._
-import io.circe._
 import io.circe.syntax._
-import io.circe.generic.semiauto._
+import io.circe.generic.auto._
 import org.http4s.Method._
 import org.http4s._
 import org.http4s.circe._
@@ -16,22 +15,14 @@ class EchoTests extends FunSuite {
   case class EchoReq(value: String)
 
   object EchoReq {
-    implicit val pongReqEncoder: Encoder[EchoReq] = deriveEncoder[EchoReq]
-    implicit val pongReqDecoder: Decoder[EchoReq] = deriveDecoder[EchoReq]
-
     implicit def pongReqEntityDecoder[F[_] : Sync]: EntityDecoder[F, EchoReq] = jsonOf
-
     implicit def pongReqEntityEncoder[F[_] : Applicative]: EntityEncoder[F, EchoReq] = jsonEncoderOf
   }
 
   case class EchoRes(value: String)
 
   object EchoRes {
-    implicit val pongResEncoder: Encoder[EchoRes] = deriveEncoder[EchoRes]
-    implicit val pongResDecoder: Decoder[EchoRes] = deriveDecoder[EchoRes]
-
     implicit def pongResEntityDecoder[F[_] : Sync]: EntityDecoder[F, EchoRes] = jsonOf
-
     implicit def pongResEntityEncoder[F[_] : Applicative]: EntityEncoder[F, EchoRes] = jsonEncoderOf
   }
 

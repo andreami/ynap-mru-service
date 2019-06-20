@@ -2,8 +2,7 @@ package com.ynap.mru
 
 import cats.Applicative
 import cats.effect.{IO, Sync}
-import io.circe.generic.semiauto._
-import io.circe.{Decoder, Encoder}
+import io.circe.generic.auto._
 import org.http4s.circe._
 import org.http4s.dsl.io._
 import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
@@ -21,8 +20,6 @@ object MruRoutes {
   case class Pong(value: String)
 
   object Pong {
-    implicit val pongEncoder: Encoder[Pong] = deriveEncoder[Pong]
-    implicit val pongDecoder: Decoder[Pong] = deriveDecoder[Pong]
     implicit def pongEntityDecoder[F[_] : Sync]: EntityDecoder[F, Pong] = jsonOf
     implicit def pongEntityEncoder[F[_] : Applicative]: EntityEncoder[F, Pong] = jsonEncoderOf
   }
@@ -35,8 +32,6 @@ object MruRoutes {
   case class Echo(value: String)
 
   object Echo {
-    implicit val pongEncoder: Encoder[Echo] = deriveEncoder[Echo]
-    implicit val pongDecoder: Decoder[Echo] = deriveDecoder[Echo]
     implicit def pongEntityDecoder[F[_] : Sync]: EntityDecoder[F, Echo] = jsonOf
     implicit def pongEntityEncoder[F[_] : Applicative]: EntityEncoder[F, Echo] = jsonEncoderOf
   }
