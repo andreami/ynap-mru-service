@@ -2,8 +2,8 @@ package com.ynap.mru
 
 import cats._
 import cats.effect._
-import io.circe.syntax._
 import io.circe.generic.auto._
+import io.circe.syntax._
 import org.http4s.Method._
 import org.http4s._
 import org.http4s.circe._

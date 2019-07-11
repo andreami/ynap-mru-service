@@ -33,8 +33,8 @@
         <parameter value="-Xfuture" />
       </parameters>
       <plugins>
-        <plugin path="C:\Users\matteo\.ivy2\cache\org.spire-math\kind-projector_2.12\jars\kind-projector_2.12-0.9.6.jar" />
-        <plugin path="C:\Users\matteo\.ivy2\cache\com.olegpy\better-monadic-for_2.12\jars\better-monadic-for_2.12-0.2.4.jar" />
+        <plugin path="C:\Users\matteo\AppData\Local\Coursier\cache\v1\https\repo1.maven.org\maven2\org\spire-math\kind-projector_2.12\0.9.6\kind-projector_2.12-0.9.6.jar" />
+        <plugin path="C:\Users\matteo\AppData\Local\Coursier\cache\v1\https\repo1.maven.org\maven2\com\olegpy\better-monadic-for_2.12\0.2.4\better-monadic-for_2.12-0.2.4.jar" />
       </plugins>
     </profile>
   </component>

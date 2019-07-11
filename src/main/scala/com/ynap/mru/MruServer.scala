@@ -13,7 +13,7 @@ object MruServer {
   def app: HttpApp[IO] = routes.orNotFound
 
   def routes: HttpRoutes[IO] =
-    (MruRoutes.ping <+> MruRoutes.echo)
+    MruRoutes.ping <+> MruRoutes.echo
 
   def stream(implicit T: Timer[IO], C: ContextShift[IO]): Stream[IO, Nothing] = {
     for {
